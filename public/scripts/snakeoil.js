@@ -107,7 +107,7 @@
   });
 
   function drawMyCards(cards) {
-    
+
     let username = $('#username').val();
     $(`#${username} selected`).hide();
     let words = $(`#${username} words`);
@@ -117,7 +117,7 @@
     selectedCards = [];
 
     for (let card of cards) {
-      
+
       let p = document.createElement('p');
       p.innerHTML = card;
       words.append(p);
@@ -135,7 +135,7 @@
 
           // only two cards can be selected at a time
           // force remove the oldest selected one
-          if (selectedCards.length >= 2) { 
+          if (selectedCards.length >= 2) {
             let unselected = selectedCards.shift();
             selectedMap[unselected].selected = false;
             selectedMap[unselected].element.className = '';
@@ -156,7 +156,7 @@
         }
 
         console.log(selectedCards);
-      }); 
+      });
     }
   }
 
@@ -196,7 +196,7 @@
 
   let ws;
   function connectWebsocket() {
-    
+
     if (ws) {
       ws.onerror = ws.onopen = ws.onclose = null;
       ws.close();
@@ -216,7 +216,7 @@
 
     ws.onmessage = function(res) {
       console.log(res.data);
-      try { 
+      try {
         let detail = JSON.parse(res.data);
         if (typeof detail === 'object') {
           let event = new CustomEvent(detail.event, { detail });
@@ -239,7 +239,7 @@
       console.log(`${event.detail.event} Event Triggered!`);
       let data = event.detail.data;
       console.log(data);
-      
+
       $('#startbtn').prop("disabled",true);
 
       drawCustomer(data.customer);
@@ -250,6 +250,7 @@
     });
 
     ws.addEventListener('OnPlayerPitch', (event) => {
+      $('#pitchbtn').hide();
       console.log(`${event.detail.event} Event Triggered!`);
       let player = event.detail.data;
       console.log(player);
@@ -264,7 +265,7 @@
       console.log('No WebSocket connection');
       return;
     }
-    
+
     let message = $('#messages').val();
     ws.send(message);
     $('#messagebox').html('');
