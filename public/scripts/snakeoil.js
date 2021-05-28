@@ -8,6 +8,7 @@
   }
 
   function disableLoginForm(data) {
+    $('#pitchbtn').prop("disabled",true);
     $('#loginscreen').hide();
     $('#gamescreen').show();
     $('#roomcode').val(data.roomcode);
@@ -87,6 +88,7 @@
   });
 
   $('#pitchbtn').click(function() {
+    $('#pitchbtn').prop("disabled",true);
     let roomcode = $('#roomcode').val();
     let data = JSON.stringify({
       roomcode: roomcode,
@@ -241,6 +243,7 @@
       console.log(data);
 
       $('#startbtn').prop("disabled",true);
+      $('#pitchbtn').prop("disabled",false);
 
       drawCustomer(data.customer);
       let username = $('#username').val();
@@ -250,7 +253,6 @@
     });
 
     ws.addEventListener('OnPlayerPitch', (event) => {
-      $('#pitchbtn').hide();
       console.log(`${event.detail.event} Event Triggered!`);
       let player = event.detail.data;
       console.log(player);
